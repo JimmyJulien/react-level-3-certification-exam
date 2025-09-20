@@ -1,0 +1,31 @@
+* {
+  font-family: system-ui, sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+header {
+  background-color: black;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 0.05rem;
+  padding: 1rem;
+}
+
+main {
+  padding: 1rem;
+}
+
+h2,
+h3 {
+  margin-top: 0;
+}
+
+.form-field {
+  display: grid;
+  margin-bottom: 0.5rem;
+}
