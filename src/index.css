@@ -17,6 +17,8 @@ header {
 }
 
 main {
+  display: grid;
+  gap: 2rem;
   padding: 1rem;
 }
 
