@@ -2,32 +2,17 @@ import { useRef, useState } from 'react';
 import type { ToastProps } from './Toast';
 
 export function useToast() {
-  const id = '1';
+  const id = useRef<string>(`toast-${crypto.randomUUID()}`);
 
   const ref = useRef<HTMLDialogElement>(null);
 
-  function openDialog() {
-    if (!ref.current) {
-      return;
-    }
-
-    ref.current.show();
-  }
-
-  function close() {
-    if (!ref.current) {
-      return;
-    }
-
-    ref.current.close();
-  }
-
   const [toastProps, setToastProps] = useState<ToastProps>({
-    close,
+    close: hideToast,
+    id: id.current,
+    isVisible: false,
+    ref,
     text: '',
-    id,
-    ref: undefined,
-    type: 'success',
+    type: undefined,
   });
 
   function showToast({
@@ -37,19 +22,19 @@ export function useToast() {
     text: string;
     type: ToastProps['type'];
   }) {
-    setToastProps({
-      close,
+    setToastProps((actualProps) => ({
+      ...actualProps,
+      isVisible: true,
       text,
-      id,
-      ref,
       type,
-    });
-
-    openDialog();
+    }));
   }
 
   function hideToast() {
-    close();
+    setToastProps((actualProps) => ({
+      ...actualProps,
+      isVisible: false,
+    }));
   }
 
   return {
