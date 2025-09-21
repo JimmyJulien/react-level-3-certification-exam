@@ -1,5 +1,5 @@
 import type { Exercise1Model } from './Exercise1Model';
-import { useStorageState } from './use-storage-state';
+import { useStorageState } from './useStorageState';
 
 // Exercise 1 - spec 5
 export function Exercise1Display() {

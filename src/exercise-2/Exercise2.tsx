@@ -1,7 +1,7 @@
 import { ConfirmationModal } from './ConfirmationModal';
 import { Toast } from './Toast';
-import { useDialog } from './use-dialog';
-import { useToast } from './use-toast';
+import { useDialog } from './useDialog';
+import { useToast } from './useToast';
 
 export function Exercise2() {
   const {
