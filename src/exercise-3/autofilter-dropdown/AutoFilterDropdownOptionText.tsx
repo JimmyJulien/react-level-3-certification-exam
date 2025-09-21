@@ -17,6 +17,7 @@ export function AutoFilterDropdownOptionText({
 
   const regex = new RegExp(`(${filter})`, 'gi');
 
+  // Exercise 3 - spec 4
   const formattedText = filter
     ? purifiedText.replace(regex, '<b>$1</b>')
     : purifiedText;

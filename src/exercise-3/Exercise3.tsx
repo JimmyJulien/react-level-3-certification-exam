@@ -15,8 +15,8 @@ export function Exercise3() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 30%)',
-          gap: '2rem',
+          gridTemplateColumns: 'calc(25vw - 3rem) calc(75vw - 3rem)',
+          gap: '3rem',
         }}
       >
         <Exercise3Form

@@ -22,33 +22,30 @@ export function Exercise1Form() {
   }
 
   return (
-    <div>
-      <h3>Form</h3>
-      <form action={onSubmit}>
-        <div className="form-field">
-          <label htmlFor="name">Name</label>
-          <input type="text" id="name" name="name" />
-        </div>
-        <div className="form-field">
-          <label htmlFor="code">Code</label>
-          <input type="number" id="code" name="code" />
-        </div>
-        <div className="form-field">
-          <label htmlFor="birth-date">Birth date</label>
-          <input type="date" id="birth-date" name="birth-date" />
-        </div>
-        <div className="form-field">
-          <label htmlFor="autorizations">Autorizations</label>
-          <select name="autorizations" id="autorizations" multiple>
-            <option value="read">Read</option>
-            <option value="write">Write</option>
-            <option value="execute">Execute</option>
-          </select>
-        </div>
-        <div style={{ marginTop: 16 }}>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
+    <form action={onSubmit}>
+      <div className="form-field">
+        <label htmlFor="name">Name</label>
+        <input type="text" id="name" name="name" />
+      </div>
+      <div className="form-field">
+        <label htmlFor="code">Code</label>
+        <input type="number" id="code" name="code" />
+      </div>
+      <div className="form-field">
+        <label htmlFor="birth-date">Birth date</label>
+        <input type="date" id="birth-date" name="birth-date" />
+      </div>
+      <div className="form-field">
+        <label htmlFor="autorizations">Autorizations</label>
+        <select name="autorizations" id="autorizations" multiple>
+          <option value="read">Read</option>
+          <option value="write">Write</option>
+          <option value="execute">Execute</option>
+        </select>
+      </div>
+      <div style={{ marginTop: 16 }}>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
   );
 }

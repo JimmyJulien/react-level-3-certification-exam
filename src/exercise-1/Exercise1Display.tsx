@@ -7,8 +7,10 @@ export function Exercise1Display() {
 
   return (
     <div>
-      <h3>Storage value</h3>
-      <pre>{value ? JSON.stringify(value, null, 2) : 'Not defined'}</pre>
+      <label htmlFor="value">Value :</label>
+      <pre id="value">
+        {value ? JSON.stringify(value, null, 2) : 'Not defined'}
+      </pre>
     </div>
   );
 }

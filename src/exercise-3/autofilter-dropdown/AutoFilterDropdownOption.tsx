@@ -29,6 +29,7 @@ export function AutoFilterDropdownOption<T extends WithId>({
 
   const optionText = String(option[filterProperty]);
 
+  // Exercise 3 - spec 2
   const optionContainsFilter = optionText
     .toLocaleLowerCase()
     .includes(filter.toLocaleLowerCase());
@@ -37,6 +38,7 @@ export function AutoFilterDropdownOption<T extends WithId>({
     return null;
   }
 
+  // Exercise 3 - spec 1
   return (
     <li
       {...otherProps}

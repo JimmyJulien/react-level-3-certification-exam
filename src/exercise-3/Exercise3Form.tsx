@@ -76,6 +76,7 @@ export function Exercise3Form({ selectUser, selectPost }: Exercise3FormProps) {
     selectPost(post);
   }
 
+  // Exercise 3 - spec 7
   return (
     <form>
       <div className="form-field">

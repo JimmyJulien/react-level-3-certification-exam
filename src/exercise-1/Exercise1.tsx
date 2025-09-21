@@ -8,7 +8,7 @@ export function Exercise1() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 3fr',
+          gridTemplateColumns: 'calc(25vw - 3rem) calc(75vw - 3rem)',
           gap: '3rem',
         }}
       >

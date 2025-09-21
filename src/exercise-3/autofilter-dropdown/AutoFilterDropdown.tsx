@@ -19,6 +19,7 @@ export type AutoFilterDropdownProps<T extends WithId> =
     valueChange: (value: T | null) => void;
   };
 
+// Exercise 3 - spec 6
 export function AutoFilterDropdown<T extends WithId>({
   children,
   filterProperty,
@@ -47,7 +48,7 @@ export function AutoFilterDropdown<T extends WithId>({
     activeOption,
     areOptionsVisible,
     filter,
-    filterProperty,
+    filterProperty, // Exercise 3 - spec 3
     id,
     options,
     dispatch,
@@ -56,7 +57,7 @@ export function AutoFilterDropdown<T extends WithId>({
   };
 
   useEffect(() => {
-    valueChange(selectedOption);
+    valueChange(selectedOption); // Exercise 3 -spec 5
   }, [selectedOption]);
 
   // NOTE: as never to avoid complex TS boilerplate and any
