@@ -9,7 +9,7 @@ import {
   type AutoFilterDropdownContextType,
 } from './AutoFilterDropdownContext';
 import type { WithId } from './AutoFilterDropdownTypes';
-import { autoFilterDropdownReducer } from './autoFilterDropdownReducer';
+import { autoFilterDropdownReducer } from './autoFilterDropdownReducer2';
 
 export type AutoFilterDropdownProps<T extends WithId> =
   ComponentProps<'div'> & {
