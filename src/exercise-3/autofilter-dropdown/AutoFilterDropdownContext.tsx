@@ -1,6 +1,6 @@
 import { createContext, use, type ActionDispatch } from 'react';
 import type { WithId } from './AutoFilterDropdownTypes';
-import type { AutoFilterDropdownAction } from './autoFilterDropdownReducer2';
+import type { AutoFilterDropdownAction } from './autoFilterDropdownReducer';
 
 export type AutoFilterDropdownContextType<T extends WithId> = {
   activeOption: T | null;
