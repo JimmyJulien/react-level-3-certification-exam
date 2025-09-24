@@ -22,8 +22,8 @@ export function useToast() {
     text: string;
     type: ToastProps['type'];
   }) {
-    setToastProps((actualProps) => ({
-      ...actualProps,
+    setToastProps((currentProps) => ({
+      ...currentProps,
       isVisible: true,
       text,
       type,
@@ -31,8 +31,8 @@ export function useToast() {
   }
 
   function hideToast() {
-    setToastProps((actualProps) => ({
-      ...actualProps,
+    setToastProps((currentProps) => ({
+      ...currentProps,
       isVisible: false,
     }));
   }

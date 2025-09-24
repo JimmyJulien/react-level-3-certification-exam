@@ -1,19 +1,21 @@
 import DOMPurify from 'dompurify';
 import type { ComponentProps } from 'react';
-import { useAutoFilterDropdownContext } from './AutoFilterDropdownContext';
+import { useAutoFilterDropdownV2Context } from './AutoFilterDropdownV2Context';
 
-export type AutoFilterDropdownOptionTextProps = Omit<
+export type AutoFilterDropdownV2OptionTextProps = Omit<
   ComponentProps<'span'>,
   'children' | 'dangerouslySetInnerHTML'
 > & { text: string };
 
-export function AutoFilterDropdownOptionText({
+export function AutoFilterDropdownV2OptionText({
   text,
   ...otherProps
-}: AutoFilterDropdownOptionTextProps) {
+}: AutoFilterDropdownV2OptionTextProps) {
   const purifiedText = DOMPurify.sanitize(text);
 
-  const { filter } = useAutoFilterDropdownContext();
+  const {
+    state: { filter },
+  } = useAutoFilterDropdownV2Context();
 
   const regex = new RegExp(`(${filter})`, 'gi');
 

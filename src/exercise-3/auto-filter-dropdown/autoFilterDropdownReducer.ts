@@ -1,10 +1,5 @@
 import type { KeyboardEvent } from 'react';
 import type { WithId } from './AutoFilterDropdownTypes';
-import {
-  getFilteredOptions,
-  getFirstFilteredOption,
-  getLastFilteredOption,
-} from './AutoFilterDropdownUtils';
 
 export interface AutoFilterDropdownState<T> {
   activeOption: T | null;
@@ -53,31 +48,16 @@ export function autoFilterDropdownReducer<T extends WithId>(
 ): AutoFilterDropdownState<T> {
   switch (action.type) {
     case 'BLUR':
-      return {
-        ...state,
-        activeOption: null,
-        areOptionsVisible: false,
-      };
+      return onBlur<T>(state);
+
     case 'FILTER':
-      return {
-        ...state,
-        filter: action.payload,
-        selectedOption: null,
-      };
+      return onFilter<T>(state, action.payload);
 
     case 'FOCUS':
-      return {
-        ...state,
-        areOptionsVisible: true,
-        activeOption: getFirstFilteredOption({
-          filter: state.filter,
-          filterProperty: state.filterProperty,
-          options: state.options,
-        }),
-      };
+      return onFocus<T>(state);
 
     case 'HOVER_OPTION':
-      return { ...state, activeOption: action.payload };
+      return onHoverOption(state, action.payload);
 
     case 'PRESS_KEY':
       return onPressKey(state, action.payload);
@@ -86,13 +66,7 @@ export function autoFilterDropdownReducer<T extends WithId>(
       return onRegisterOption(state, action.payload);
 
     case 'SELECT_OPTION':
-      return {
-        ...state,
-        activeOption: action.payload,
-        areOptionsVisible: false,
-        filter: String(action.payload[state.filterProperty]),
-        selectedOption: action.payload,
-      };
+      return onSelectOption(state, action.payload);
 
     case 'UNREGISTER_OPTION':
       return onUnregisterOption(state, action.payload);
@@ -100,6 +74,82 @@ export function autoFilterDropdownReducer<T extends WithId>(
     default:
       return state;
   }
+}
+
+function getFilteredOptions<T extends WithId>({
+  options,
+  filterProperty,
+  filter,
+}: Pick<AutoFilterDropdownState<T>, 'options' | 'filterProperty' | 'filter'>) {
+  return options.filter((option) =>
+    String(option[filterProperty])
+      .toLocaleLowerCase()
+      .includes(filter.toLocaleLowerCase()),
+  );
+}
+
+function getFirstFilteredOption<T extends WithId>({
+  options,
+  filterProperty,
+  filter,
+}: Pick<AutoFilterDropdownState<T>, 'options' | 'filterProperty' | 'filter'>) {
+  const filteredOptions = getFilteredOptions({
+    options,
+    filterProperty,
+    filter,
+  });
+  return filteredOptions[0] ?? null;
+}
+
+function getLastFilteredOption<T extends WithId>({
+  options,
+  filterProperty,
+  filter,
+}: Pick<AutoFilterDropdownState<T>, 'options' | 'filterProperty' | 'filter'>) {
+  const filteredOptions = getFilteredOptions({
+    options,
+    filterProperty,
+    filter,
+  });
+  return filteredOptions[filteredOptions.length - 1] ?? null;
+}
+
+function onBlur<T extends WithId>(
+  state: AutoFilterDropdownState<T>,
+): AutoFilterDropdownState<T> {
+  return {
+    ...state,
+    activeOption: null,
+    areOptionsVisible: false,
+  };
+}
+
+function onFilter<T extends WithId>(
+  state: AutoFilterDropdownState<T>,
+  filter: string,
+): AutoFilterDropdownState<T> {
+  return {
+    ...state,
+    areOptionsVisible: true,
+    filter,
+    selectedOption: null,
+  };
+}
+
+function onFocus<T extends WithId>(
+  state: AutoFilterDropdownState<T>,
+): AutoFilterDropdownState<T> {
+  return {
+    ...state,
+    areOptionsVisible: true,
+  };
+}
+
+function onHoverOption<T extends WithId>(
+  state: AutoFilterDropdownState<T>,
+  activeOption: T | null,
+): AutoFilterDropdownState<T> {
+  return { ...state, activeOption };
 }
 
 function onPressKey<T extends WithId>(
@@ -148,7 +198,7 @@ function onArrowDown<T extends WithId>(
     return {
       ...state,
       activeOption: null,
-      areOptionsVisible: true,
+      areOptionsVisible: false,
     };
   }
 
@@ -160,11 +210,11 @@ function onArrowDown<T extends WithId>(
     };
   }
 
-  const actualIndex = filteredOptions.findIndex(
-    (option) => option.id === activeOption?.id,
+  const currentIndex = filteredOptions.findIndex(
+    (option) => option.id === activeOption.id,
   );
 
-  if (actualIndex === -1) {
+  if (currentIndex === -1) {
     return {
       ...state,
       activeOption: firstFilteredOption,
@@ -172,7 +222,7 @@ function onArrowDown<T extends WithId>(
     };
   }
 
-  const newIndex = actualIndex + 1;
+  const newIndex = currentIndex + 1;
 
   if (newIndex > filteredOptions.length - 1) {
     return {
@@ -219,7 +269,7 @@ function onArrowUp<T extends WithId>(
     return {
       ...state,
       activeOption: null,
-      areOptionsVisible: true,
+      areOptionsVisible: false,
     };
   }
 
@@ -231,11 +281,11 @@ function onArrowUp<T extends WithId>(
     };
   }
 
-  const actualIndex = filteredOptions.findIndex(
+  const currentIndex = filteredOptions.findIndex(
     (option) => option.id === activeOption.id,
   );
 
-  if (actualIndex === -1) {
+  if (currentIndex === -1) {
     return {
       ...state,
       activeOption: firstFilteredOption,
@@ -243,7 +293,7 @@ function onArrowUp<T extends WithId>(
     };
   }
 
-  const newIndex = actualIndex - 1;
+  const newIndex = currentIndex - 1;
 
   if (newIndex < 0) {
     return {
@@ -304,6 +354,19 @@ function onRegisterOption<T extends WithId>(
   return {
     ...state,
     options: [...state.options, optionToRegister],
+  };
+}
+
+function onSelectOption<T extends WithId>(
+  state: AutoFilterDropdownState<T>,
+  option: T,
+): AutoFilterDropdownState<T> {
+  return {
+    ...state,
+    activeOption: null,
+    areOptionsVisible: false,
+    filter: String(option[state.filterProperty]),
+    selectedOption: option,
   };
 }
 

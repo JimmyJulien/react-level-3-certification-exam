@@ -1,26 +1,26 @@
 import type { ComponentProps, ReactNode } from 'react';
-import { useAutoFilterDropdownContext } from './AutoFilterDropdownContext';
+import { useAutoFilterDropdownV2Context } from './AutofilterDropdownV2Context';
 
-export type AutoFilterDropdownOptionListProps = ComponentProps<'ul'> & {
+export type AutoFilterDropdownV2OptionListProps = ComponentProps<'ul'> & {
   children: ReactNode;
 };
 
-export function AutoFilterDropdownOptionList({
+export function AutoFilterDropdownV2OptionList({
   children,
   id,
   style,
   ...otherProps
-}: AutoFilterDropdownOptionListProps) {
-  const { areOptionsVisible } = useAutoFilterDropdownContext();
+}: AutoFilterDropdownV2OptionListProps) {
+  const { state } = useAutoFilterDropdownV2Context();
 
-  if (!areOptionsVisible) {
+  if (!state.areOptionsVisible) {
     return null;
   }
 
   return (
     <ul
       {...otherProps}
-      id={`autofilter-dropdown-list-${id}`}
+      id={`auto-filter-dropdown-list-${id}`}
       role="listbox"
       style={{
         border: '1px solid',

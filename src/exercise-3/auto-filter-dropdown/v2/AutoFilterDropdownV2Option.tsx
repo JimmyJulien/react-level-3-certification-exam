@@ -1,31 +1,25 @@
 import { type ComponentProps, useEffect } from 'react';
-import { useAutoFilterDropdownContext } from './AutoFilterDropdownContext';
-import type { WithId } from './AutoFilterDropdownTypes';
+import type { WithId } from '../AutoFilterDropdownTypes';
+import { useAutoFilterDropdownV2Context } from './AutoFilterDropdownV2Context';
 
-export type AutoFilterDropdownOptionProps<T extends WithId> =
+export type AutoFilterDropdownV2OptionProps<T extends WithId> =
   ComponentProps<'li'> & { option: T };
 
-export function AutoFilterDropdownOption<T extends WithId>({
+export function AutoFilterDropdownV2Option<T extends WithId>({
   children,
   option,
   style,
   ...otherProps
-}: AutoFilterDropdownOptionProps<T>) {
-  const { activeOption, filter, filterProperty, dispatch } =
-    useAutoFilterDropdownContext();
+}: AutoFilterDropdownV2OptionProps<T>) {
+  const {
+    state: { activeOption, filter, filterProperty },
+    dispatch,
+  } = useAutoFilterDropdownV2Context();
 
   useEffect(() => {
     dispatch({ type: 'REGISTER_OPTION', payload: option });
     return () => dispatch({ type: 'UNREGISTER_OPTION', payload: option });
   }, []);
-
-  function onMouseEnter() {
-    dispatch({ type: 'HOVER_OPTION', payload: option });
-  }
-
-  function onClick() {
-    dispatch({ type: 'SELECT_OPTION', payload: option });
-  }
 
   const optionText = String(option[filterProperty]);
 
@@ -44,8 +38,8 @@ export function AutoFilterDropdownOption<T extends WithId>({
       {...otherProps}
       aria-selected={activeOption?.id === option.id}
       id={`option-${option.id}`}
-      onMouseDown={onClick}
-      onMouseEnter={onMouseEnter}
+      onMouseDown={() => dispatch({ type: 'SELECT_OPTION', payload: option })}
+      onMouseEnter={() => dispatch({ type: 'HOVER_OPTION', payload: option })}
       role="option"
       style={{
         backgroundColor: `${

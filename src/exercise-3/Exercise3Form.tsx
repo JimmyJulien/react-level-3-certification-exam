@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { AutoFilterDropdown } from './autofilter-dropdown/AutoFilterDropdown';
-import { AutoFilterDropdownInput } from './autofilter-dropdown/AutoFilterDropdownInput';
-import { AutoFilterDropdownOption } from './autofilter-dropdown/AutoFilterDropdownOption';
-import { AutoFilterDropdownOptionList } from './autofilter-dropdown/AutoFilterDropdownOptionList';
-import { AutoFilterDropdownOptionText } from './autofilter-dropdown/AutoFilterDropdownOptionText';
+import { AutoFilterDropdownV1 } from './auto-filter-dropdown/v1/AutoFilterDropdownV1';
+import { AutoFilterDropdownV2 } from './auto-filter-dropdown/v2/AutoFilterDropdownV2';
+import { AutoFilterDropdownV2Input } from './auto-filter-dropdown/v2/AutoFilterDropdownV2Input';
+import { AutoFilterDropdownV2Option } from './auto-filter-dropdown/v2/AutoFilterDropdownV2Option';
+import { AutoFilterDropdownV2OptionList } from './auto-filter-dropdown/v2/AutoFilterDropdownV2OptionList';
+import { AutoFilterDropdownV2OptionText } from './auto-filter-dropdown/v2/AutoFilterDropdownV2OptionText';
 import type { ApiPost, Post } from './Post';
 import type { ApiUser, User } from './User';
 
@@ -79,49 +80,41 @@ export function Exercise3Form({ selectUser, selectPost }: Exercise3FormProps) {
   // Exercise 3 - spec 7
   return (
     <form>
-      <div className="form-field">
-        <label htmlFor="user">User</label>
-        <AutoFilterDropdown
-          filterProperty="name"
-          id="user"
-          valueChange={onUserChange}
-        >
-          <AutoFilterDropdownInput />
-          <AutoFilterDropdownOptionList>
-            {(users ?? []).map((user) => (
-              <AutoFilterDropdownOption
-                key={user.id}
-                option={user}
-                title={user.name}
-              >
-                <AutoFilterDropdownOptionText text={user.name} />
-              </AutoFilterDropdownOption>
-            ))}
-          </AutoFilterDropdownOptionList>
-        </AutoFilterDropdown>
-      </div>
+      {users.length > 0 && (
+        <div className="form-field">
+          <label htmlFor="user">User</label>
+          <AutoFilterDropdownV1
+            filterProperty="name"
+            id="user"
+            options={users}
+            valueChange={onUserChange}
+          />
+        </div>
+      )}
 
-      <div className="form-field">
-        <label htmlFor="post">Post</label>
-        <AutoFilterDropdown
-          filterProperty="title"
-          id="post"
-          valueChange={onPostChange}
-        >
-          <AutoFilterDropdownInput />
-          <AutoFilterDropdownOptionList>
-            {(posts ?? []).map((post) => (
-              <AutoFilterDropdownOption
-                key={post.id}
-                option={post}
-                title={post.title}
-              >
-                <AutoFilterDropdownOptionText text={post.title} />
-              </AutoFilterDropdownOption>
-            ))}
-          </AutoFilterDropdownOptionList>
-        </AutoFilterDropdown>
-      </div>
+      {posts.length > 0 && (
+        <div className="form-field">
+          <label htmlFor="post">Post</label>
+          <AutoFilterDropdownV2
+            filterProperty="title"
+            id="post"
+            valueChange={onPostChange}
+          >
+            <AutoFilterDropdownV2Input />
+            <AutoFilterDropdownV2OptionList>
+              {(posts ?? []).map((post) => (
+                <AutoFilterDropdownV2Option
+                  key={post.id}
+                  option={post}
+                  title={post.title}
+                >
+                  <AutoFilterDropdownV2OptionText text={post.title} />
+                </AutoFilterDropdownV2Option>
+              ))}
+            </AutoFilterDropdownV2OptionList>
+          </AutoFilterDropdownV2>
+        </div>
+      )}
     </form>
   );
 }

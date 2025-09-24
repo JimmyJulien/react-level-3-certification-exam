@@ -18,7 +18,7 @@ export function Exercise3Display({
           id="user-value"
           style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
         >
-          {JSON.stringify(selectedUser, null, 2)}
+          {selectedUser ? JSON.stringify(selectedUser, null, 2) : 'Not defined'}
         </pre>
       </div>
 
@@ -28,7 +28,7 @@ export function Exercise3Display({
           id="post-value"
           style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
         >
-          {JSON.stringify(selectedPost, null, 2)}
+          {selectedPost ? JSON.stringify(selectedPost, null, 2) : 'Not defined'}
         </pre>
       </div>
     </div>
