@@ -1,5 +1,5 @@
 import type { ComponentProps, ReactNode } from 'react';
-import { useAutoFilterDropdownV2Context } from './AutofilterDropdownV2Context';
+import { useAutoFilterDropdownV2Context } from './AutoFilterDropdownV2Context';
 
 export type AutoFilterDropdownV2OptionListProps = ComponentProps<'ul'> & {
   children: ReactNode;
